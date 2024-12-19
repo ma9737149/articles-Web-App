@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+{% with msgs = get_flashed_messages(with_categories=true) %}
+    
+    {% for category , msg in msgs %}
+    
+    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+        {{ msg }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    
+    {% endfor %}
+    
+{% endwith %}
+
+<div class="container d-flex justify-content-center align-items-center flex-column " id="formSection">
+    <div class="card text-center">
+        <div class="card-header bg-primary fs-3">Sign up</div>
+        <form class="card-body d-flex justify-content-center align-items-center flex-column" method="POST">
+            {{ form.hidden_tag() }}
+            {{ form.username(class = 'form-control mt-2 username' , placeholder = 'Enter Your Username') }}
+
+            {% if form.username.errors %}
+                {% for error in form.username.errors %}
+                    <div class="text-danger me-auto fs-6">{{ error }}</div>
+                {% endfor %}
+            {% endif %}
+
+            
+            <div class="password">
+                {{ form.password(class = 'form-control mb-2 mt-2 password' , placeholder = 'Enter Your Password') }}
+                <i class="fa-solid fa-eye-slash icon-eye"></i>
+            </div>
+
+
+            {% if form.password.errors %}
+                {% for error in form.password.errors %}
+                    <div class="text-danger me-auto fs-6">{{ error }}</div>
+                {% endfor %}
+            {% endif %}
+
+            {{ form.submit(class = 'btn btn-primary') }}
+        </form>
+        <div class="card-footer">
+            <small class="text-white-50">you allready have an account ?</small> then
+            <a href="{{ url_for('auth.login_page') }}">login</a>
+        </div>
+
+
+
+    </div>
+</div>
+
+
+    <script>
+        const eye_slash = 'fa-regular fa-eye-slash icon-eye'
+        const eye_icon = 'fa-regular fa-eye icon-eye'
+        const eye_element = document.querySelector('.card .password .icon-eye')
+        const passwordInput = document.getElementById('password')
+
+        eye_element.addEventListener("click", (e) => {
+            if (e.currentTarget.classList.contains('fa-eye-slash')) {
+                e.currentTarget.className = eye_icon
+                passwordInput.setAttribute('type' , 'text')
+            }
+            else {
+                e.currentTarget.className = eye_slash
+                passwordInput.setAttribute('type', 'password')
+            }
+        })
+    </script>
+{% endblock %}

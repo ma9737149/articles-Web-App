@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% with msgs = get_flashed_messages(with_categories=true) %}
+{% for category , msg in msgs %}
+<div class="alert alert-{{ category }} alert-dismissible fade show text-capitalize" role="alert">
+    {{ msg }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
+{% endwith %}
+
+{% if articles %}
+<div class="container mt-4">
+    <div class="row g-4">
+        {% for article in articles %}
+        <div class="col-md-6 col-sm-12 col-lg-4">
+            <div class="card h-100">
+                <img src="{{ url_for('static', filename=article['article_image']) }}" class="card-img-top"
+                    alt="Article Image">
+                <div class="card-body">
+                    <h5 class="card-title">{{ article['article_name'] }}</h5>
+                    <a href="/articles/{{ article['article_id'] }}" class="btn btn-primary">See Article Content</a>
+                    {% if not limit %}
+                    <a class="likes text-decoration-none {% if article['article_id'] in user_likes %} text-primary {% else %} text-white {% endif %}"
+                        href="?action=add_like&article_id={{ article['article_id'] }}">
+                        {{ article['likes'] }}
+                        <i class="fa-solid fa-thumbs-up"></i>
+                    </a>
+                    {% endif %}
+
+                    {% if user_created_articles_ids %}
+                        {% if articles %}
+                            {% if article['id'] in user_created_articles_ids %}
+                                <a class="fa-solid fa-remove remove-icon text-decoration-none" href="articles/remove/{{ article['article_id'] }}"></a>
+                                <a class="fa-solid fa-edit edit-icon text-decoration-none" href="/update_article/{{ article['article_id'] }}"></a>
+                            {% endif %}
+                        {% endif %}
+                    {% endif %}
+                    
+                </div>
+                <div class="card-footer text-muted">
+                    {{ article['created_at'] }}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+{% endblock %}

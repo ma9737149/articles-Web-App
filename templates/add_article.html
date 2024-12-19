@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+    {% with msgs = get_flashed_messages(with_categories=true) %}
+    
+        {% for category , msg in msgs %}
+        
+        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+            {{ msg }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        
+        {% endfor %}
+    
+    {% endwith %}
+
+
+    {{ ckeditor.load( custom_url = url_for('static' , filename = 'ckeditor/ckeditor.js') ) }}
+    {{ ckeditor.config(name='article_bio') }}
+    <div class="container mt-4">
+        <h5 class="text-capitalize mb-4 border-bottom pb-2">article information</h5>
+        <form class="row g-2" method="POST" enctype="multipart/form-data">
+            {{ form.hidden_tag() }}
+            <div class="col-12">
+                <div class="mt-2">{{ form.article_name.label }}</div>
+                {{ form.article_name(class='form-control') }}
+                {% if form.article_name.errors %}
+                    {% for error in form.article_name.errors %}
+                        <span class="text-danger">{{ error }}</span>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <div class="col-md-6 col-lg-6 col-sm-12">
+                <div class="mb-2">
+                    {{ form.article_img.label }}
+                </div>
+
+                {{ form.article_img(class='form-control article-img') }}
+                {% if form.article_img.errors %}
+                    {% for error in form.article_img.errors %}
+                    <span class="text-danger">{{ error }}</span>
+                    {% endfor %}
+                {% endif %}
+
+            </div>
+            <div class="col-md-6 col-lg-6 col-sm-12">
+                {{ form.article_bio.label }}
+                {{ form.article_bio(class='form-control') }}
+                {% if form.article_bio.errors %}
+                    {% for error in form.article_bio.errors %}
+                    <span class="text-danger">{{ error }}</span>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+            {{ form.add_Article_btn(class='btn btn-primary mt-4') }}
+        </form>
+    </div>
+
+
+
+
+
+{% endblock %}

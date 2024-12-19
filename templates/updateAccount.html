@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% with msgs = get_flashed_messages(with_categories=true) %}
+{% for category, msg in msgs %}
+<div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+    {{ msg }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
+{% endwith %}
+
+<div class="container mt-4">
+    <h5 class="text-capitalize mb-4 border-bottom pb-2">User Information</h5>
+    <form class="row g-2" method="POST" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+
+        <div class="col-12 mb-3">
+            {% if user_Data['user_profile_image'] %}
+            <img src="{{ url_for('static', filename=user_Data['user_profile_image']) }}" alt="Profile Image"
+                class="img-fluid rounded-circle">
+            {% endif %}
+        </div>
+
+        <div class="col-12">
+            <div class="mt-2">{{ form.username.label }}</div>
+            {{ form.username(class='form-control', value=user_Data['username']) }}
+            {% if form.username.errors %}
+            {% for error in form.username.errors %}
+            <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+            {% endif %}
+        </div>
+
+        <div class="col-md-6 col-lg-6 col-sm-12">
+            <div class="mb-2">
+                {{ form.password.label }}
+            </div>
+            {{ form.password(class='form-control' , value=user_Data['password']) }}
+            {% if form.password.errors %}
+            {% for error in form.password.errors %}
+            <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+            {% endif %}
+        </div>
+
+        <div class="col-md-6 col-lg-6 col-sm-12">
+            <div class="mb-2">
+                {{ form.userImage.label }}
+            </div>
+            {{ form.userImage(class='form-control') }}
+            {% if form.userImage.errors %}
+            {% for error in form.userImage.errors %}
+            <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+            {% endif %}
+        </div>
+
+        {{ form.submitBtn(class='btn btn-primary mt-4') }}
+    </form>
+</div>
+
+{% endblock %}

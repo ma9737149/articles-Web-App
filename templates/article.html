@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="container mt-4">
+        <h5 class="text-capitalize mb-4 border-bottom pb-2">{{ article_name }}</h5>
+        <div>{{ article_content | convertToHTML }} </div>
+    </div>
+
+
+{% endblock %}
