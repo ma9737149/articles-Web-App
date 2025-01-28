@@ -1,4 +1,6 @@
 **/__pycache__/
-static/imgs/article_imgs/*
-static/imgs/account_imgs/*
 venv/
+static/imgs/article_imgs/*
+!static/imgs/article_imgs/.gitkeep
+static/imgs/account_imgs/*
+!static/imgs/account_imgs/.gitkeep
