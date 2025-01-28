@@ -232,3 +232,10 @@ def remove_article_by_id(article_id : int , user_id : int) -> None:
         cursor.execute('DELETE FROM articles WHERE article_id = %s AND id = %s' , (article_id , user_id))
         cnx.commit()
     return
+
+def update_article_by_id(article_id : int, user_id : int , article_content : str , article_name : str ) -> None:
+    with db.get_connection() as cnx:
+        cursor = cnx.cursor()
+        cursor.execute("UPDATE articles SET article_content = %s , article_name = %s WHERE id = %s AND article_id = %s" , (article_content , article_name , user_id , article_id))
+        cnx.commit()
+    return

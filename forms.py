@@ -60,9 +60,7 @@ class updateAccount(FlaskForm):
 
 
 class updateArticle(FlaskForm):
-    article_name = StringField(label='Article Name', validators=[DataRequired(), Regexp(
-        r'^[A-Za-z][A-Za-z0-9]{4,18}$', message='Username must be 5-19 characters long and start with a letter.')])
-
+    article_name = StringField(label='Article Name', validators=[DataRequired()])
 
     article_bio = CKEditorField(label='Article Bio', validators=[
                                 DataRequired(), Length(min=25)])

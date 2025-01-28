@@ -1,4 +1,4 @@
-from flask import session, render_template, redirect, url_for, flash, Blueprint, request , abort
+from flask import session, render_template, redirect, url_for, flash, Blueprint, request , abort , flash
 from models.helper_functions import (
     get_article_by_id,
     check_in_articles,
@@ -13,7 +13,8 @@ from models.helper_functions import (
     filter_articles_by_name,
     get_user_articles,
     remove_article_by_id,
-    check_user_in_data
+    check_user_in_data,
+    update_article_by_id
 )
 from forms import AddArticles, updateArticle
 
@@ -186,6 +187,18 @@ def update_article(article_id):
 
 
             form = updateArticle()
+
+            form_article_name = form.article_name.data
+            form_article_bio = form.article_bio.data
+            form_article_image = form.article_img.data
+
+
+            if form.validate_on_submit():
+                update_article_by_id(article_id , user_id , form_article_bio , form_article_name)
+                flash("Article Update Succefully!" , "success")
+                return redirect(url_for("articles.articles_page"))
+
+
             return render_template('update_article.html', 
                                     title='Update Article',
                                     login=False, 
