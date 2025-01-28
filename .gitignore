@@ -1,0 +1,4 @@
+**/__pycache__/
+static/imgs/article_imgs/*
+static/imgs/account_imgs/*
+venv/
