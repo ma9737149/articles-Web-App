@@ -4,6 +4,16 @@ import secrets
 import os
 from PIL import Image
 
+def check_user_in_data(username : str , password : str) :
+    with db.get_connection() as cnx:
+        cursor = cnx.cursor()
+        cursor.execute("SELECT username , password FROM users WHERE username = %s AND password = %s" , (username , password))
+        data = cursor.fetchone()
+        if data :
+            return True
+        else:
+            return False
+
 
 
 def check_in_data(username: str, password: str):

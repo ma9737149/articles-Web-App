@@ -5,6 +5,13 @@ import os
 
 load_dotenv()
 
+# print(os.getenv("HOST"))
+# print(os.getenv("USERDB"))
+# print(os.getenv("PASSWORD"))
+# print(os.getenv("SECRET_KEY"))
+
+
+
 
 class DB:
     _pool = None
@@ -16,7 +23,7 @@ class DB:
             pool_name='articles_web_app',
             connection_timeout=20,
             host=os.getenv('HOST'),
-            user=os.getenv('USER'),
+            user=os.getenv('USERDB'),
             password=os.getenv('PASSWORD'),
             database='articles_web_app',
         )
